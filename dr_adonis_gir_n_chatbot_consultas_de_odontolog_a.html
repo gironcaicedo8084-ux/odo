@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Adonis Girón - Consultas Odontológicas</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        mint: {
+                            50: '#f0fdf9',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                            950: '#042f2e',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Mint Aesthetic & Animations */
+        body {
+            background: linear-gradient(135deg, #e6fffa 0%, #ccfbf1 50%, #f0fdf9 100%);
+        }
+
+        .chat-bg {
+            background-color: #f7fdfb;
+            background-image: radial-gradient(#2dd4bf 0.5px, transparent 0.5px), radial-gradient(#2dd4bf 0.5px, #f7fdfb 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-opacity: 0.15;
+        }
+
+        /* Glassmorphism elements */
+        .mint-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 212, 191, 0.25);
+        }
+
+        .mint-glass-dark {
+            background: rgba(15, 118, 110, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #99f6e4;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2dd4bf;
+        }
+
+        /* Pulse wave animation for voice call */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 0.4; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        .pulse-wave {
+            animation: pulse-ring 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased selection:bg-mint-200">
+
+    <!-- MAIN CONTAINER -->
+    <div class="flex-1 flex flex-col max-w-5xl w-full mx-auto sm:my-4 sm:rounded-3xl shadow-2xl overflow-hidden border border-mint-200/60 mint-glass relative">
+
+        <!-- HEADER -->
+        <header class="bg-gradient-to-r from-mint-600 via-mint-500 to-teal-600 text-white p-4 sm:p-5 flex items-center justify-between shadow-md z-10">
+            <div class="flex items-center space-x-3.5">
+                <!-- Avatar with glowing badge -->
+                <div class="relative">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 p-1 backdrop-blur-md border border-white/30 shadow-inner flex items-center justify-center overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&auto=format&fit=crop&q=80" alt="Dr. Adonis Girón" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/150x150/0d9488/ffffff?text=Dr.+Adonis'">
+                    </div>
+                    <span class="absolute bottom-0 right-0 w-4 h-4 bg-emerald-400 border-2 border-white rounded-full shadow-sm animate-pulse" title="En línea"></span>
+                </div>
+
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-bold text-lg sm:text-xl tracking-wide text-white">Dr. Adonis Girón</h1>
+                        <span class="bg-mint-100/20 text-mint-50 text-xs px-2 py-0.5 rounded-full font-medium border border-white/20">Odontología</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-mint-100/90 flex items-center gap-1 font-light">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-yellow-300"></i>
+                        Atención amable, paciente y precisa
+                    </p>
+                </div>
+            </div>
+
+            <!-- Action Buttons Header -->
+            <div class="flex items-center space-x-2">
+                <!-- Voice Call Button -->
+                <button onclick="startVoiceCall()" class="bg-white text-mint-700 hover:bg-mint-50 hover:scale-105 active:scale-95 transition-all duration-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg group">
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 group-hover:animate-ping"></div>
+                    <i data-lucide="phone-call" class="w-4 h-4 text-mint-600"></i>
+                    <span class="hidden sm:inline">Llamar al Dr.</span>
+                </button>
+
+                <!-- Knowledge drawer toggle button -->
+                <button onclick="toggleFAQModal()" class="bg-mint-700/60 hover:bg-mint-700 text-white p-2.5 rounded-xl text-xs transition-all border border-white/20" title="Preguntas Frecuentes">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- QUICK FAQS CHIPS BAR -->
+        <div class="bg-mint-50/80 border-b border-mint-100 px-4 py-2.5 overflow-x-auto whitespace-nowrap scrollbar-none flex items-center gap-2 z-10 shadow-sm">
+            <span class="text-xs font-semibold text-mint-800 flex items-center gap-1 pr-1">
+                <i data-lucide="zap" class="w-3.5 h-3.5 text-mint-500"></i> Preguntas rápidas:
+            </span>
+            <button onclick="sendQuickQuestion('¿Vale la pena estudiar odontología?')" class="text-xs bg-white text-mint-800 border border-mint-200 hover:border-mint-400 hover:bg-mint-100/50 px-3 py-1.5 rounded-full transition-all shadow-sm flex-shrink-0">
+                ¿Vale la pena estudiar?
+            </button>
+            <button onclick="sendQuickQuestion('¿Qué promedio necesito para estudiar odontología?')" class="text-xs bg-white text-mint-800 border border-mint-200 hover:border-mint-400 hover:bg-mint-100/50 px-3 py-1.5 rounded-full transition-all shadow-sm flex-shrink-0">
+                Promedio requerido
+            </button>
+            <button onclick="sendQuickQuestion('¿Puedo estudiar odontología si soy malo en matemáticas?')" class="text-xs bg-white text-mint-800 border border-mint-200 hover:border-mint-400 hover:bg-mint-100/50 px-3 py-1.5 rounded-full transition-all shadow-sm flex-shrink-0">
+                ¿Malo en matemáticas?
+            </button>
+            <button onclick="sendQuickQuestion('¿Se utiliza tecnología en odontología?')" class="text-xs bg-white text-mint-800 border border-mint-200 hover:border-mint-400 hover:bg-mint-100/50 px-3 py-1.5 rounded-full transition-all shadow-sm flex-shrink-0">
+                Tecnología usada
+            </button>
+            <button onclick="sendQuickQuestion('¿La odontología solo trata dientes?')" class="text-xs bg-white text-mint-800 border border-mint-200 hover:border-mint-400 hover:bg-mint-100/50 px-3 py-1.5 rounded-full transition-all shadow-sm flex-shrink-0">
+                ¿Solo trata dientes?
+            </button>
+            <button onclick="sendQuickQuestion('¿Qué consejos da un odontólogo para cuidar los dientes?')" class="text-xs bg-white text-mint-800 border border-mint-200 hover:border-mint-400 hover:bg-mint-100/50 px-3 py-1.5 rounded-full transition-all shadow-sm flex-shrink-0">
+                Consejos de cuidado
+            </button>
+        </div>
+
+        <!-- CHAT MESSAGES AREA -->
+        <main id="chatMessages" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 chat-bg">
+            <!-- Welcome message from Dr. Adonis -->
+            <div class="flex items-start gap-3 max-w-[85%] sm:max-w-[75%] animate-fade-in">
+                <div class="w-9 h-9 rounded-xl bg-mint-600 text-white flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">
+                    Dr.
+                </div>
+                <div class="bg-white rounded-2xl rounded-tl-none p-4 shadow-md border border-mint-100 text-slate-700 text-sm sm:text-base leading-relaxed">
+                    <div class="flex items-center justify-between gap-2 mb-1">
+                        <span class="font-bold text-mint-800 text-xs sm:text-sm">Dr. Adonis Girón</span>
+                        <span class="text-[10px] text-slate-400" id="welcomeTime">Ahora</span>
+                    </div>
+                    <p>¡Hola! Qué gusto saludarte. Soy el <strong>Dr. Adonis Girón</strong>, especialista en Odontología. 😊</p>
+                    <p class="mt-2">Estoy aquí para responder con todo el gusto cualquier duda sobre la carrera de odontología, salud bucal o consejos prácticos. ¡Pregúntame las veces que necesites, estoy a tu servicio!</p>
+                    
+                    <div class="mt-3 pt-2 border-t border-mint-50 flex items-center gap-2">
+                        <button onclick="speakText('¡Hola! Qué gusto saludarte. Soy el Doctor Adonis Girón, especialista en Odontología. Estoy aquí para responder con todo el gusto cualquier duda que tengas.')" class="text-xs text-mint-600 hover:text-mint-800 font-medium flex items-center gap-1 hover:underline">
+                            <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Escuchar saludo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- TYPING INDICATOR (Hidden by default) -->
+        <div id="typingIndicator" class="hidden px-6 py-2 chat-bg flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-mint-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                Dr.
+            </div>
+            <div class="bg-white px-4 py-2 rounded-2xl rounded-tl-none shadow-sm border border-mint-100 flex items-center space-x-1.5">
+                <span class="text-xs text-mint-700 font-medium mr-1">El Dr. Adonis está escribiendo</span>
+                <span class="w-2 h-2 bg-mint-400 rounded-full animate-bounce" style="animation-delay: 0s;"></span>
+                <span class="w-2 h-2 bg-mint-500 rounded-full animate-bounce" style="animation-delay: 0.2s;"></span>
+                <span class="w-2 h-2 bg-mint-600 rounded-full animate-bounce" style="animation-delay: 0.4s;"></span>
+            </div>
+        </div>
+
+        <!-- CHAT INPUT BAR -->
+        <footer class="p-3 sm:p-4 bg-white border-t border-mint-100 z-10">
+            <form id="chatForm" onsubmit="handleUserSubmit(event)" class="flex items-center gap-2">
+                <div class="relative flex-1">
+                    <input type="text" id="userInput" placeholder="Escribe tu pregunta para el Dr. Adonis aquí..." class="w-full bg-mint-50/60 text-slate-800 placeholder-slate-400 text-sm sm:text-base px-4 py-3 sm:py-3.5 pr-10 rounded-2xl border border-mint-200 focus:outline-none focus:border-mint-500 focus:ring-2 focus:ring-mint-200 transition-all">
+                    
+                    <button type="button" onclick="toggleSpeechRecognition()" id="micBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-mint-600 hover:text-mint-800 p-1.5 rounded-lg transition-all" title="Dictar por voz">
+                        <i data-lucide="mic" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <button type="submit" class="bg-gradient-to-r from-mint-500 to-teal-600 hover:from-mint-600 hover:to-teal-700 text-white p-3.5 sm:px-6 sm:py-3.5 rounded-2xl font-semibold shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <span class="hidden sm:inline text-sm">Enviar</span>
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </form>
+            <div class="flex justify-between items-center mt-2 px-1 text-[11px] text-slate-400">
+                <span>Responde siempre con amabilidad y claridad</span>
+                <span class="text-mint-600 font-medium">Dr. Adonis Girón • Consultorio Virtual</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- VOICE CALL OVERLAY MODAL -->
+    <div id="voiceCallModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in">
+        <div class="mint-glass-dark w-full max-w-sm rounded-3xl p-6 sm:p-8 text-center text-white shadow-2xl border border-mint-400/30 flex flex-col items-center justify-between min-h-[480px] relative overflow-hidden">
+            
+            <!-- Call Header -->
+            <div class="w-full">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint-800/80 border border-mint-400/30 text-mint-200 text-xs mb-4">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span id="callStatusText">Conectando llamada...</span>
+                </div>
+                <h2 class="text-2xl font-bold tracking-tight">Dr. Adonis Girón</h2>
+                <p class="text-xs text-mint-200 mt-0.5">Especialista en Odontología</p>
+            </div>
+
+            <!-- Avatar with Pulsing Effect -->
+            <div class="relative my-8">
+                <div id="pulseRing" class="absolute inset-0 rounded-full bg-mint-400/30 pulse-wave scale-150"></div>
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-mint-300 p-1 shadow-2xl relative z-10 bg-mint-900 overflow-hidden mx-auto">
+                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=200&auto=format&fit=crop&q=80" alt="Dr. Adonis Girón" class="w-full h-full object-cover rounded-full">
+                </div>
+            </div>
+
+            <!-- Interactive Subtitles during Call -->
+            <div class="w-full bg-black/30 rounded-2xl p-3.5 border border-white/10 min-h-[80px] flex items-center justify-center my-2">
+                <p id="callSubtitleText" class="text-xs sm:text-sm text-mint-100 italic font-light leading-relaxed">
+                    "Hola, soy el Dr. Adonis Girón. Te escucho atentamente..."
+                </p>
+            </div>
+
+            <!-- Audio Waveform Visualizer simulation -->
+            <div class="flex items-center justify-center gap-1 h-6 my-2">
+                <div class="w-1 bg-mint-300 rounded-full animate-bounce h-3" style="animation-delay:0.1s"></div>
+                <div class="w-1 bg-mint-300 rounded-full animate-bounce h-6" style="animation-delay:0.3s"></div>
+                <div class="w-1 bg-mint-300 rounded-full animate-bounce h-4" style="animation-delay:0.2s"></div>
+                <div class="w-1 bg-mint-300 rounded-full animate-bounce h-7" style="animation-delay:0.4s"></div>
+                <div class="w-1 bg-mint-300 rounded-full animate-bounce h-2" style="animation-delay:0.1s"></div>
+            </div>
+
+            <!-- Call Control Buttons -->
+            <div class="flex items-center gap-6 mt-4">
+                <button onclick="toggleCallMute()" id="callMuteBtn" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all">
+                    <i data-lucide="mic" id="callMuteIcon" class="w-5 h-5"></i>
+                </button>
+
+                <!-- Speak/Ask Call Button -->
+                <button onclick="listenInCall()" id="callListenBtn" class="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 border-2 border-white/50 flex items-center justify-center text-white shadow-lg transition-all transform hover:scale-110 active:scale-95" title="Hablar con el Doctor">
+                    <i data-lucide="mic" class="w-6 h-6"></i>
+                </button>
+
+                <!-- End Call Button -->
+                <button onclick="endVoiceCall()" class="w-12 h-12 rounded-full bg-red-500 hover:bg-red-600 border border-white/20 flex items-center justify-center text-white shadow-lg transition-all transform hover:scale-105 active:scale-95" title="Colgar">
+                    <i data-lucide="phone-off" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <p class="text-[10px] text-mint-300/80 mt-3">Presiona el botón verde para hablarle directamente al Dr. Adonis</p>
+        </div>
+    </div>
+
+    <!-- FAQ DRAWER / MODAL -->
+    <div id="faqModal" class="fixed inset-0 z-40 hidden flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
+        <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-mint-200 overflow-hidden flex flex-col max-h-[85vh]">
+            <div class="bg-gradient-to-r from-mint-600 to-teal-600 text-white p-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    <h3 class="font-bold text-base">Base de Conocimiento del Dr. Adonis</h3>
+                </div>
+                <button onclick="toggleFAQModal()" class="text-white/80 hover:text-white p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="p-4 overflow-y-auto space-y-3 flex-1" id="faqListContainer">
+                <!-- FAQs inserted dynamically -->
+            </div>
+
+            <div class="p-3 bg-mint-50 border-t border-mint-100 text-center">
+                <button onclick="toggleFAQModal()" class="bg-mint-600 text-white text-xs px-5 py-2 rounded-xl font-semibold hover:bg-mint-700 transition-all">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Knowledge Base as requested by user
+        const KNOWLEDGE_BASE = [
+            {
+                keywords: ["vale la pena", "estudiar odontologia", "estudiar odontología", "por que estudiar"],
+                question: "¿Vale la pena estudiar odontología?",
+                answer: "Sí, totalmente. Si te gusta ayudar a las personas, trabajar con precisión y aprender continuamente, es una profesión excelente. Combina ciencia, tecnología avanzada y la satisfacción de la atención directa a pacientes."
+            },
+            {
+                keywords: ["promedio", "nota", "requisito", "ingreso", "necesito para estudiar"],
+                question: "¿Qué promedio necesito para estudiar odontología?",
+                answer: "El promedio necesario depende puntualmente de los requisitos de admisión de cada universidad e institución educativa."
+            },
+            {
+                keywords: ["malo en matemáticas", "matematicas", "matemática", "números"],
+                question: "¿Puedo estudiar odontología si soy malo en matemáticas?",
+                answer: "¡Claro que sí! Aunque las matemáticas básicas son útiles, las materias centrales y más importantes en la carrera suelen ser Biología, Química y Anatomía."
+            },
+            {
+                keywords: ["tecnologia", "tecnología", "equipos", "escáner", "3d", "ia"],
+                question: "¿Se utiliza tecnología en odontología?",
+                answer: "Sí, y muchísima. Actualmente empleamos radiografías digitales, escáneres intraorales, impresión 3D, diseño asistido por computadora (CAD/CAM), inteligencia artificial para apoyo diagnóstico y cirugía guiada."
+            },
+            {
+                keywords: ["solo trata dientes", "solo dientes", "diente", "boca"],
+                question: "¿La odontología solo trata dientes?",
+                answer: "No, en absoluto. También abarca el tratamiento de las encías, la lengua, los labios, la mandíbula, las glándulas salivales y todos los demás tejidos de la boca."
+            },
+            {
+                keywords: ["preventiva", "prevención", "odontología preventiva"],
+                question: "¿Qué es la odontología preventiva?",
+                answer: "Es el conjunto de acciones destinadas a evitar enfermedades bucales mediante la educación del paciente, la higiene adecuada, revisiones periódicas y la aplicación preventiva de flúor o selladores."
+            },
+            {
+                keywords: ["objetivo", "meta", "principal odontologo", "odontólogo"],
+                question: "¿Cuál es el objetivo principal de un odontólogo?",
+                answer: "Nuestro objetivo principal es mantener y recuperar la salud bucal de las personas para mejorar significativamente su calidad de vida."
+            },
+            {
+                keywords: ["consejos", "cuidar los dientes", "recomendaciones", "cuidado bucal", "lavarse"],
+                question: "¿Qué consejos da un odontólogo para cuidar los dientes?",
+                answer: "Mis consejos principales para mantener tu sonrisa perfecta son:\n\n• Cepillarse al menos dos veces al día.\n• Usar hilo dental diariamente.\n• Reducir el consumo de azúcar.\n• Beber suficiente agua durante el día.\n• Evitar fumar.\n• Visitar al odontólogo cada seis meses para tu chequeo."
+            }
+        ];
+
+        // System state
+        let isCalling = false;
+        let isMuted = false;
+        let recognition = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            setCurrentTime();
+            renderFAQList();
+
+            // Setup speech recognition if available
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'es-ES';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    if (isCalling) {
+                        handleInCallQuestion(transcript);
+                    } else {
+                        document.getElementById('userInput').value = transcript;
+                        handleUserSubmit();
+                    }
+                };
+
+                recognition.onerror = () => {
+                    if (isCalling) {
+                        updateCallSubtitle("No te escuché bien, ¡puedes repetirme la duda!");
+                    }
+                };
+            }
+        });
+
+        function setCurrentTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('welcomeTime').innerText = timeStr;
+        }
+
+        function findBestAnswer(query) {
+            const cleanQuery = query.toLowerCase().trim();
+
+            // Search matching keywords in knowledge base
+            for (let item of KNOWLEDGE_BASE) {
+                for (let key of item.keywords) {
+                    if (cleanQuery.includes(key)) {
+                        return item.answer;
+                    }
+                }
+            }
+
+            // Fallback kind & calm response from Dr. Adonis
+            return "¡Qué excelente pregunta! Como odontólogo siempre digo que cuidar la salud bucal es una de las mejores inversiones. Si me preguntas sobre la carrera, los hábitos de cepillado, o la tecnología que usamos, ¡estoy aquí para darte toda la información cuantas veces lo necesites con muchísimo gusto!";
+        }
+
+        function handleUserSubmit(e) {
+            if (e) e.preventDefault();
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Add user message
+            addMessage(text, 'user');
+            input.value = '';
+
+            // Show typing indicator
+            showTyping(true);
+
+            // Simulate Dr. Adonis response delay
+            setTimeout(() => {
+                showTyping(false);
+                const answer = findBestAnswer(text);
+                addMessage(answer, 'doctor');
+                // Play gentle chime
+                playNotificationSound();
+            }, 750);
+        }
+
+        function sendQuickQuestion(questionText) {
+            document.getElementById('userInput').value = questionText;
+            handleUserSubmit();
+        }
+
+        function addMessage(content, sender) {
+            const chatContainer = document.getElementById('chatMessages');
+            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex items-start gap-3 ${sender === 'user' ? 'justify-end' : ''} animate-fade-in`;
+
+            if (sender === 'user') {
+                msgDiv.innerHTML = `
+                    <div class="bg-gradient-to-r from-mint-600 to-teal-600 text-white rounded-2xl rounded-tr-none p-4 shadow-md max-w-[85%] sm:max-w-[75%] text-sm sm:text-base leading-relaxed">
+                        <div class="flex items-center justify-end gap-2 mb-1">
+                            <span class="text-[10px] text-mint-100">${timeStr}</span>
+                            <span class="font-bold text-xs">Tú</span>
+                        </div>
+                        <p class="whitespace-pre-line">${escapeHTML(content)}</p>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-sm">
+                        Tú
+                    </div>
+                `;
+            } else {
+                const speechContent = content.replace(/[•\n]/g, ' ');
+                msgDiv.innerHTML = `
+                    <div class="w-9 h-9 rounded-xl bg-mint-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-md">
+                        Dr.
+                    </div>
+                    <div class="bg-white rounded-2xl rounded-tl-none p-4 shadow-md border border-mint-100 text-slate-700 max-w-[85%] sm:max-w-[75%] text-sm sm:text-base leading-relaxed">
+                        <div class="flex items-center justify-between gap-2 mb-1">
+                            <span class="font-bold text-mint-800 text-xs sm:text-sm">Dr. Adonis Girón</span>
+                            <span class="text-[10px] text-slate-400">${timeStr}</span>
+                        </div>
+                        <p class="whitespace-pre-line">${escapeHTML(content)}</p>
+                        <div class="mt-3 pt-2 border-t border-mint-50 flex items-center gap-2">
+                            <button onclick="speakText('${escapeHTML(speechContent)}')" class="text-xs text-mint-600 hover:text-mint-800 font-medium flex items-center gap-1 hover:underline">
+                                <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Escuchar al Dr.
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            lucide.createIcons();
+        }
+
+        function showTyping(show) {
+            const indicator = document.getElementById('typingIndicator');
+            if (show) {
+                indicator.classList.remove('hidden');
+                document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+            } else {
+                indicator.classList.add('hidden');
+            }
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) {
+                alert("Tu navegador no soporta síntesis de voz.");
+                return;
+            }
+
+            window.speechSynthesis.cancel(); // Stop previous speech
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'es-ES';
+
+            // Custom pitch and rate to simulate a friendly, gentle, young male voice (adolescente/joven adulto)
+            utterance.pitch = 1.15; // Slightly higher/youthful pitch
+            utterance.rate = 1.0;   // Normal friendly pace
+
+            // Try to pick a Spanish male voice if available
+            const voices = window.speechSynthesis.getVoices();
+            const maleSpanishVoice = voices.find(v => 
+                (v.lang.includes('es') || v.lang.includes('ES')) && 
+                (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('pablo') || v.name.toLowerCase().includes('jorge') || v.name.toLowerCase().includes('alvaro') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('miguel'))
+            ) || voices.find(v => v.lang.startsWith('es'));
+
+            if (maleSpanishVoice) {
+                utterance.voice = maleSpanishVoice;
+            }
+
+            window.speechSynthesis.speak(utterance);
+            return utterance;
+        }
+
+        function startVoiceCall() {
+            isCalling = true;
+            const modal = document.getElementById('voiceCallModal');
+            modal.classList.remove('hidden');
+
+            document.getElementById('callStatusText').innerText = "Conectando llamada...";
+            document.getElementById('callSubtitleText').innerText = "Iniciando consulta telefónica con el Dr. Adonis...";
+
+            playCallRingtone();
+
+            setTimeout(() => {
+                document.getElementById('callStatusText').innerText = "En llamada • Dr. Adonis Girón";
+                const welcomeCall = "¡Hola! Hablas con el Doctor Adonis Girón. Dime, ¿en qué te puedo colaborar hoy? Puedes presionar el botón de micrófono para hacerme tu pregunta.";
+                document.getElementById('callSubtitleText').innerText = `"${welcomeCall}"`;
+                speakText(welcomeCall);
+            }, 1800);
+        }
+
+        function endVoiceCall() {
+            isCalling = false;
+            window.speechSynthesis.cancel();
+            document.getElementById('voiceCallModal').classList.add('hidden');
+        }
+
+        function toggleCallMute() {
+            isMuted = !isMuted;
+            const icon = document.getElementById('callMuteIcon');
+            const btn = document.getElementById('callMuteBtn');
+
+            if (isMuted) {
+                btn.classList.add('bg-red-500/80');
+                icon.setAttribute('data-lucide', 'mic-off');
+            } else {
+                btn.classList.remove('bg-red-500/80');
+                icon.setAttribute('data-lucide', 'mic');
+            }
+            lucide.createIcons();
+        }
+
+        function listenInCall() {
+            if (!recognition) {
+                alert("El reconocimiento por voz no está disponible en este navegador. Puedes escribirle al Dr. en el chat principal.");
+                return;
+            }
+            if (isMuted) {
+                updateCallSubtitle("Tu micrófono está silenciado. Desactiva el silencio para hablar.");
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+            updateCallSubtitle("Escuchando tu pregunta... Habla ahora.");
+            document.getElementById('callStatusText').innerText = "Te escucho atentamente...";
+            recognition.start();
+        }
+
+        function handleInCallQuestion(userSpeech) {
+            updateCallSubtitle(`Tú: "${userSpeech}"`);
+            document.getElementById('callStatusText').innerText = "El Dr. Adonis está pensando...";
+
+            setTimeout(() => {
+                const answer = findBestAnswer(userSpeech);
+                updateCallSubtitle(`Dr. Adonis: "${answer}"`);
+                document.getElementById('callStatusText').innerText = "Dr. Adonis respondiendo...";
+                const utt = speakText(answer);
+                
+                utt.onend = () => {
+                    if (isCalling) {
+                        document.getElementById('callStatusText').innerText = "En llamada • Esperando tu duda";
+                    }
+                };
+            }, 800);
+        }
+
+        function updateCallSubtitle(text) {
+            document.getElementById('callSubtitleText').innerText = text;
+        }
+
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                alert("Tu navegador no soporta entrada de voz.");
+                return;
+            }
+            const micBtn = document.getElementById('micBtn');
+            micBtn.classList.add('text-red-500', 'animate-pulse');
+            recognition.start();
+
+            recognition.onend = () => {
+                micBtn.classList.remove('text-red-500', 'animate-pulse');
+            };
+        }
+
+        function renderFAQList() {
+            const container = document.getElementById('faqListContainer');
+            container.innerHTML = KNOWLEDGE_BASE.map(item => `
+                <div class="bg-mint-50/60 p-3.5 rounded-2xl border border-mint-100 hover:border-mint-300 transition-all">
+                    <h4 class="font-bold text-mint-900 text-sm flex items-center gap-1.5 mb-1">
+                        <i data-lucide="help-circle" class="w-4 h-4 text-mint-600"></i>
+                        ${escapeHTML(item.question)}
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed pl-5 whitespace-pre-line">
+                        ${escapeHTML(item.answer)}
+                    </p>
+                    <button onclick="sendQuickQuestion('${escapeHTML(item.question)}'); toggleFAQModal();" class="mt-2 text-[11px] font-semibold text-mint-700 hover:text-mint-900 pl-5 flex items-center gap-1">
+                        Hacer esta pregunta en el chat →
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function toggleFAQModal() {
+            const modal = document.getElementById('faqModal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Audio Effects using Web Audio API
+        function playNotificationSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15); // A5
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.2);
+            } catch(e){}
+        }
+
+        function playCallRingtone() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, ctx.currentTime);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.8);
+            } catch(e){}
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+    </script>
+</body>
+</html>
